@@ -1,5 +1,11 @@
 #!/bin/bash
+#
+# Author: Stuart Minchington
+# Contact: stuart@haxtable.com
+# License: GNU GPL v3
+# View the file named LICENSE for more details.
 
+# Create log file
 LOG=/var/www/locksmith/locksmith.log
 
 # New log entry
@@ -20,7 +26,6 @@ rsync -aHyP --bwlimit=2000 --log-file=$LOG --exclude='some_dir' rsync://x.x.x.x/
 
 # Remove lock
 rm -rf /var/www/lock
-
 
 # Close out log entry
 END_DATE=$(date)
