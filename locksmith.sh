@@ -34,7 +34,7 @@ fi
 python /var/www/locksmith/lock.py
 
 # Run rsync job
-rsync -aHyP --bwlimit=2000 --log-file=$LOG --exclude='some_dir'  rsync://192.168.0.10/foo/remote_dir/. /foo/local_dir
+rsync -aHyP --bwlimit=2000 --log-file=$log --exclude='some_dir'  rsync://192.168.0.10/foo/remote_dir/. /foo/local_dir
 
 # Remove lock
 #rm -rf /var/www/lock
