@@ -21,7 +21,7 @@ echo "Script started: $START_DATE" >> $LOG
 #  exit 1 
 #fi 
 
-# New lock mechanism
+# Verify if a lock already exists
 process_id=`ps -ef | grep "lock.py" | grep -v "grep" | awk '{print $2}'`
 if [ -n "$process_id" ]; then
   echo "Process ID $process_id found. Script is currently locked." >> $LOG
@@ -30,6 +30,7 @@ else
   exit 1
 fi
 
+# Apply lock
 python /var/www/locksmith/lock.py
 
 # Run rsync job
