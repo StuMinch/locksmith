@@ -10,7 +10,7 @@ log=/var/www/locksmith/locksmith.log
 
 # Write new log entry
 start_date=$(date)
-echo "Script started: $START_DATE" >> $log
+echo "Script started: $start_date" >> $log
 
 # Verify if a lock already exists
 process_id=`ps -ef | grep "lock.py" | grep -v "grep" | awk '{print $2}'`
