@@ -5,28 +5,36 @@
 # License: GNU GPL v3
 # View the file named LICENSE for more details.
 
-# Create log file
+# Creating log directory
 LOG=/var/www/locksmith/locksmith.log
 
 # New log entry
 START_DATE=$(date)
 echo "Script started: $START_DATE" >> $LOG
 
-# Lock creation/verification
-if mkdir /var/www/lock; then
+# Old lock mechanism
+#if mkdir /var/www/lock; then 
+#
+#  echo "Locking succeeded" >> $LOG 
+#else 
+#  echo "Lock failed - exit" >> $LOG 
+#  exit 1 
+#fi 
 
-  echo "Locking succeeded" >> $LOG
+# New lock mechanism
+process_id=`ps -ef | grep "lock.py" | grep -v "grep" | awk '{print $2}'`
+if [ -n "$process_id" ]; then
+  echo "Process ID $process_id found. Script is currently locked." >> $LOG
 else
-  echo "Lock failed - exit" >> $LOG
+  echo "No Process ID was found. Proceeding to run the lock script." >> $LOG
   exit 1
 fi
 
-# Rsync job
-rsync -aHyP --bwlimit=2000 --log-file=$LOG --exclude='some_dir' rsync://x.x.x.x/some/remote_dir/. /some/local_dir
+python /var/www/locksmith/lock.py
+
+# Run rsync job
+rsync -aHyP --bwlimit=2000 --log-file=$LOG --exclude='some_dir'  rsync://192.168.0.10/foo/remote_dir/. /foo/local_dir
 
 # Remove lock
-rm -rf /var/www/lock
-
-# Close out log entry
-END_DATE=$(date)
-echo "Script completed: $END_DATE" >> $LOG
+#rm -rf /var/www/lock
+kill -9 $process_id
