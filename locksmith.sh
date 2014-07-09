@@ -6,11 +6,11 @@
 # View the file named LICENSE for more details.
 
 # Creating log directory
-LOG=/var/www/locksmith/locksmith.log
+log=/var/www/locksmith/locksmith.log
 
 # New log entry
-START_DATE=$(date)
-echo "Script started: $START_DATE" >> $LOG
+start_date=$(date)
+echo "Script started: $START_DATE" >> $log
 
 # Old lock mechanism
 #if mkdir /var/www/lock; then 
@@ -24,9 +24,9 @@ echo "Script started: $START_DATE" >> $LOG
 # Verify if a lock already exists
 process_id=`ps -ef | grep "lock.py" | grep -v "grep" | awk '{print $2}'`
 if [ -n "$process_id" ]; then
-  echo "Process ID $process_id found. Script is currently locked." >> $LOG
+  echo "Process ID $process_id found. Script is currently locked." >> $log
 else
-  echo "No Process ID was found. Proceeding to run the lock script." >> $LOG
+  echo "No Process ID was found. Proceeding to run the lock script." >> $log
   exit 1
 fi
 
@@ -39,3 +39,7 @@ rsync -aHyP --bwlimit=2000 --log-file=$LOG --exclude='some_dir'  rsync://192.168
 # Remove lock
 #rm -rf /var/www/lock
 kill -9 $process_id
+
+# Close out log entry
+end_date=$(date)
+echo "Script completed: $end_date" >> $log
