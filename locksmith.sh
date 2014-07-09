@@ -8,18 +8,9 @@
 # Creating log directory
 log=/var/www/locksmith/locksmith.log
 
-# New log entry
+# Write new log entry
 start_date=$(date)
 echo "Script started: $START_DATE" >> $log
-
-# Old lock mechanism
-#if mkdir /var/www/lock; then 
-#
-#  echo "Locking succeeded" >> $LOG 
-#else 
-#  echo "Lock failed - exit" >> $LOG 
-#  exit 1 
-#fi 
 
 # Verify if a lock already exists
 process_id=`ps -ef | grep "lock.py" | grep -v "grep" | awk '{print $2}'`
@@ -37,7 +28,6 @@ python /var/www/locksmith/lock.py
 rsync -aHyP --bwlimit=2000 --log-file=$log --exclude='some_dir'  rsync://192.168.0.10/foo/remote_dir/. /foo/local_dir
 
 # Remove lock
-#rm -rf /var/www/lock
 kill -9 $process_id
 
 # Close out log entry
