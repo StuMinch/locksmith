@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author: Stuart Minchington
-# Contact: stuart@haxtable.com
+# Contact: stuarttm@me.com
 # License: GNU GPL v3
 # View the file named LICENSE for more details.
 
