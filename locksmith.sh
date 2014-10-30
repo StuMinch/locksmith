@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author: Stuart Minchington
-# Contact: stuarttm@me.com
+# Contact: stuartminch@gmail.com
 # License: GNU GPL v3
 # View the file named LICENSE for more details.
 
